@@ -19,8 +19,8 @@
   --purple: #9b59b6;
   --blue: #3498db;
   --red: #e74c3c;
-  --page-bg: #fdf6e3;
-  --page-dark: #f0e6cc;
+  --page-bg: #24145daf;
+  --page-dark: #24168f;
   --ink: #3d2b1f;
 }
 
@@ -47,7 +47,7 @@ body {
   background: white;
   animation: twinkle var(--dur, 3s) infinite alternate;
 }
-@keyframes twinkle { from { opacity: 0.2; transform: scale(0.8); } to { opacity: 1; transform: scale(1.2); } }
+@keyframes twinkle { from { opacity: 0.8; transform: scale(0.8); } to { opacity: 1; transform: scale(1.2); } }
 
 /* Language selector landing */
 #landing {
@@ -251,7 +251,7 @@ body {
   border-radius: 4px 20px 20px 4px;
 }
 .cover-page .page::before {
-  background: linear-gradient(to right, #8b5e3c, #c4973d, #2c1654);
+  background: linear-gradient(to right, #8b5e3c, #c43d9c, #2c1654);
 }
 
 .cover-stars {
@@ -317,7 +317,7 @@ body {
 .open-book-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 35px rgba(255,200,50,0.6); }
 
 /* Theme selection page */
-.themes-page .page { background: linear-gradient(160deg, #fef9f0, #fdf0d5); }
+.themes-page .page { background: linear-gradient(160deg, #fef9f0, #6295f3); }
 
 .page-header {
   text-align: center;
@@ -338,14 +338,14 @@ body {
 }
 
 .theme-card {
-  background: white;
+  background: rgba(186, 210, 245, 0.288);
   border-radius: 16px;
   padding: 22px 15px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
   border: 3px solid transparent;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 15px rgba(3, 10, 90, 0.034);
   position: relative;
   overflow: hidden;
 }
@@ -366,7 +366,7 @@ body {
 .theme-name {
   font-family: 'Fredoka One', cursive;
   font-size: 1rem;
-  color: #3d2b1f;
+  color: #ffffff;
 }
 .theme-count { font-size: 0.78rem; color: #999; margin-top: 4px; }
 
@@ -416,7 +416,7 @@ body {
 .stories-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
 
 .story-item {
-  background: white;
+  background: #939a9a75;
   border-radius: 12px;
   padding: 14px 16px;
   cursor: pointer;
@@ -438,7 +438,7 @@ body {
   font-family: 'Baloo 2', cursive;
   font-size: 0.92rem;
   font-weight: 700;
-  color: #3d2b1f;
+  color: #ffffff;
   line-height: 1.3;
 }
 .story-item-meta { font-size: 0.75rem; color: #999; margin-top: 2px; }
@@ -522,6 +522,11 @@ body {
   border-left: 4px solid var(--theme-color, #4ecdc4);
 }
 .story-line.done { opacity: 0.5; }
+
+/* per-word spans for narration/highlighting */
+.story-word { cursor: pointer; display: inline-block; }
+.story-word.speaking { background: rgba(255,255,0,0.4); }
+
 
 .story-controls {
   display: flex;
@@ -779,8 +784,9 @@ body {
               <h3 id="endTitle">The End! 🎉</h3>
               <p id="endMsg">What a wonderful story! Time for sweet dreams...</p>
               <div class="end-btns">
-                <button class="end-btn secondary" id="anotherBtn" onclick="goToStories()">Read Another</button>
-                <button class="end-btn primary" id="homeBtn2" onclick="goToThemes()">Choose Theme</button>
+                <button class="end-btn secondary" id="backBtn" onclick="returnToStory()">↩️ Back</button>
+              <button class="end-btn secondary" id="anotherBtn" onclick="goToStories()">Read Another</button>
+              <button class="end-btn primary" id="homeBtn2" onclick="goToThemes()">Choose Theme</button>
               </div>
             </div>
           </div>
@@ -789,7 +795,7 @@ body {
             <button class="ctrl-btn primary" id="playBtn" onclick="toggleNarration()" title="Play/Pause">▶</button>
             <button class="ctrl-btn" onclick="nextLine()" title="Next">⏭</button>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <button class="ctrl-btn" onclick="cycleSpeed()" title="Speed" id="speedBtn" style="font-size:0.75rem;font-weight:700;width:38px;">1x</button>
+            <button class="ctrl-btn" onclick="cycleSpeed()" title="Speed" id="speedBtn" style="font-size:0.75rem;font-weight:700;width:38px;">0.5x</button>
           </div>
           <div class="page-line"></div>
         </div>
@@ -896,7 +902,7 @@ const LANGUAGES = {
       {
         id: "authors", name: "Classic Authors", emoji: "📚", color: "#7bc67e",
         stories: [
-          {title:"The Selfish Giant (Wilde)",emoji:"🌸",lines:["A giant had a beautiful garden where children loved to play.","One day the Giant came home and chased them all away.","He built a high wall and put up a sign: KEEP OUT.","Without the children, the garden stayed in winter forever.","Snow and frost covered every tree. No birds sang.","One morning the Giant heard a beautiful sound — birdsong!","He peeped out and saw: the children had crept in through a hole.","In every corner where a child sat, the snow had melted and flowers bloomed.","Only one corner remained in winter — a small boy couldn't reach a branch.","The Giant lifted him up gently. The tree burst into blossom.","The garden stayed in spring forever, and the children played there freely.]"},
+          {title:"The Selfish Giant (Wilde)",emoji:"🌸",lines:["A giant had a beautiful garden where children loved to play.","One day the Giant came home and chased them all away.","He built a high wall and put up a sign: KEEP OUT.","Without the children, the garden stayed in winter forever.","Snow and frost covered every tree. No birds sang.","One morning the Giant heard a beautiful sound — birdsong!","He peeped out and saw: the children had crept in through a hole.","In every corner where a child sat, the snow had melted and flowers bloomed.","Only one corner remained in winter — a small boy couldn't reach a branch.","The Giant lifted him up gently. The tree burst into blossom.","The garden stayed in spring forever, and the children played there freely."]},
           {title:"Thumbelina (Andersen)",emoji:"🌼",lines:["She was born from a flower and was no bigger than a thumb.","Her cradle was a walnut shell, her blanket a rose petal.","She sang the most beautiful songs in a voice like a crystal bell.","A toad wanted her to marry her son, and kidnapped her one night.","Fish heard her crying and chewed through her lily-pad prison.","A butterfly carried her across the water.","A cockchafer beetle caught her but later abandoned her.","She was taken in by a kind field mouse, then nearly married a blind mole.","A swallow she had nursed back to health carried her to a sunny land.","There, tiny flower fairies waited, and a prince her own size fell in love.","She was given wings and her true name — Maia, Queen of the Flowers."]},
           {title:"The Nightingale (Andersen)",emoji:"🎵",lines:["In a palace near a forest lived an emperor who had everything.","Travelers wrote about one wonder above all others — the nightingale's song.","The emperor commanded the bird be found. A kitchen girl led them to it.","The plain little brown bird sang and the emperor wept with joy.","It lived at court — but then a gift arrived: a mechanical nightingale.","It was jeweled and golden and played the same tune perfectly, again and again.","The real nightingale quietly flew back to its forest.","One night the emperor fell gravely ill. The mechanical bird wound down.","Death sat on his chest. All his deeds surrounded him like shadows.","Through the window came the real nightingale's song — clear and true.","The shadows fled. Death was charmed away. Music had healed the emperor."]},
           {title:"The Giving Tree (Silverstein)",emoji:"🌳",lines:["There was once a tree — and she loved a little boy.","Every day the boy would come and play, eat apples, swing from her branches.","The tree was happy.","As the boy grew, he needed things: money, a house, a boat.","Each time, the tree gave what she had — apples, branches, trunk.","Each time the tree said: 'I am happy.'","The boy went out into the world and became an old man.","One day he came back. He was tired and needed rest.","All that remained of the tree was an old stump.","'Sit with me, old friend,' said the stump.","The old man sat. And the tree was happy. That is what love does."]},
@@ -1018,6 +1024,59 @@ const LANGUAGES = {
 };
 
 // ========================
+// NARRATION HELPERS
+
+function generateNarration(lines) {
+  const text = (lines || []).join(' ').replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+
+  // Words to lightly emphasize in narration
+  const emph = ['suddenly','then','but','however','finally','bravely','kind','love','friend','true','never','always','immediately','softly','gently','quickly','slowly'];
+
+  // Strip any existing HTML for word count, but keep HTML separate for output
+  const plain = text.replace(/<[^>]+>/g, '');
+  const words = plain.split(/\s+/).filter(Boolean);
+
+  // Limit to 400 words
+  let trimmed = words.length > 400 ? words.slice(0,400).join(' ') + '…' : plain;
+
+  // Re-apply emphasis as simple <strong> tags (case-insensitive whole-word)
+  let html = trimmed;
+  emph.forEach(w => {
+    const re = new RegExp('\\b' + w + '\\b', 'gi');
+    html = html.replace(re, match => `<strong>${match}</strong>`);
+  });
+
+  // Add a wrapping paragraph for nicer rendering
+  return `<p style="margin:0;padding:0;">${html}</p>`;
+}
+
+function getActiveLines() {
+  if (!currentStory) return [];
+  return currentStory._narrationLines && currentStory._narrationLines.length ? currentStory._narrationLines : currentStory.lines;
+}
+
+// highlight spoken word span and clear previous
+function highlightWord(lineIdx, wordIdx) {
+  document.querySelectorAll('.story-word.speaking').forEach(el => el.classList.remove('speaking'));
+  const lineEl = document.querySelectorAll('#storyTextArea .story-line')[lineIdx];
+  if (!lineEl) return;
+  const span = lineEl.querySelector(`.story-word[data-word-index="${wordIdx}"]`);
+  if (span) span.classList.add('speaking');
+}
+
+function jumpToWord(lineIdx, wordIdx) {
+  currentLineIndex = lineIdx;
+  currentWordIndex = wordIdx;
+  renderStoryLines();
+  updateProgress();
+  if (isPlaying) {
+    stopNarration();
+    startNarration();
+  }
+}
+
+// ========================
 // STATE
 // ========================
 let currentLang = 'en';
@@ -1027,7 +1086,7 @@ let currentLineIndex = 0;
 let isPlaying = false;
 let narrationInterval = null;
 let narrationSpeed = 1; // seconds per line multiplier
-const speeds = [1, 0.5, 2]; // normal, fast, slow
+const speeds = [0.5, 0.75, 1]; // allowed speeds .5x, .75x, 1x
 let speedIdx = 0;
 let utterance = null;
 
@@ -1179,6 +1238,7 @@ function openStory(story) {
   stopNarration();
   currentStory = story;
   currentLineIndex = 0;
+  currentWordIndex = 0;
   const L = LANGUAGES[currentLang];
   const color = currentTheme ? currentTheme.color : '#4ecdc4';
 
@@ -1208,6 +1268,15 @@ function openStory(story) {
   }
 
   // text
+  // Build flowing paragraph narration from existing sentence lines
+  const origLines = (story.lines || []).slice();
+  let lessonLine = null;
+  if (origLines.length && /^(Lesson:|सीख[:\s]|Lesson)/i.test(origLines[origLines.length-1])) {
+    lessonLine = origLines.pop();
+  }
+  const para = generateNarration(origLines);
+  currentStory._narrationLines = para ? [para] : [];
+  if (lessonLine) currentStory._narrationLines.push(`<em style="color:#666;font-style:italic;margin-top:6px;display:block;">${lessonLine}</em>`);
   renderStoryLines();
 
   // controls color
@@ -1234,14 +1303,58 @@ function renderStoryLines() {
   const color = currentTheme ? currentTheme.color : '#4ecdc4';
   document.documentElement.style.setProperty('--theme-color', color);
 
-  currentStory.lines.forEach((line, i) => {
+  const linesToRender = getActiveLines();
+  // prepare word lists for TTS
+  currentStory._wordLists = [];
+
+  linesToRender.forEach((line, i) => {
     const div = document.createElement('div');
     div.className = 'story-line' + (i === currentLineIndex ? ' active' : (i < currentLineIndex ? ' done' : ''));
-    div.textContent = line;
-    div.onclick = () => jumpToLine(i);
     div.style.cursor = 'pointer';
+
+    // create spans for each word, preserving simple tags like <strong>
+    const tmp = document.createElement('div');
+    tmp.innerHTML = line;
+    const words = [];
+    let counter = 0;
+
+    function walk(node, parent) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const tokens = node.textContent.split(/(\s+)/);
+        tokens.forEach(tok => {
+          if (/^\s+$/.test(tok)) {
+            parent.appendChild(document.createTextNode(tok));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'story-word';
+            span.textContent = tok;
+            span.dataset.wordIndex = counter;
+            span.onclick = () => jumpToWord(i, counter);
+            parent.appendChild(span);
+            words.push(tok);
+            counter++;
+          }
+        });
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const el = document.createElement(node.tagName.toLowerCase());
+        // copy attributes if necessary
+        node.getAttributeNames().forEach(attr => el.setAttribute(attr, node.getAttribute(attr)));
+        node.childNodes.forEach(child => walk(child, el));
+        parent.appendChild(el);
+      }
+    }
+
+    tmp.childNodes.forEach(child => walk(child, div));
+    currentStory._wordLists[i] = words;
+
+    div.onclick = () => jumpToLine(i);
     area.appendChild(div);
   });
+
+  // highlight current word if applicable
+  if (currentLineIndex < currentStory._wordLists.length) {
+    highlightWord(currentLineIndex, currentWordIndex);
+  }
 
   // Scroll active into view
   const active = area.querySelector('.story-line.active');
@@ -1252,6 +1365,7 @@ function renderStoryLines() {
 
 function jumpToLine(idx) {
   currentLineIndex = idx;
+  currentWordIndex = 0;
   renderStoryLines();
   updateProgress();
   if (isPlaying) {
@@ -1262,7 +1376,8 @@ function jumpToLine(idx) {
 
 function updateProgress() {
   if (!currentStory) return;
-  const pct = ((currentLineIndex + 1) / currentStory.lines.length) * 100;
+  const lines = getActiveLines();
+  const pct = ((currentLineIndex + 1) / (lines.length || 1)) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
 }
 
@@ -1276,19 +1391,42 @@ function startNarration() {
 }
 
 function speakCurrentLine() {
-  if (!currentStory || currentLineIndex >= currentStory.lines.length) {
+  const lines = getActiveLines();
+  if (!currentStory || currentLineIndex >= lines.length) {
     finishStory();
     return;
   }
+  const raw = lines[currentLineIndex];
+  // Ensure TTS reads only the text content (strip HTML tags)
+  const tmp = document.createElement('div');
+  tmp.innerHTML = raw;
+  const line = (tmp.textContent || tmp.innerText || '').trim();
 
-  const line = currentStory.lines[currentLineIndex];
+  let speakText = line;
+  // will calculate remaining text once we know the word list below
 
   // Use Web Speech API
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
-    utterance = new SpeechSynthesisUtterance(line);
+
+    // try to get word list for this line
+    const wordsForLine = (currentStory._wordLists || [])[currentLineIndex] || [];
+
+    // if starting word index beyond the list, jump to next line
+    if (currentWordIndex >= wordsForLine.length) {
+      advanceLine();
+      return;
+    }
+
+    // compute speak text based on current word index
+    if (currentWordIndex > 0 && wordsForLine.length) {
+      speakText = wordsForLine.slice(currentWordIndex).join(' ');
+    }
+
+    utterance = new SpeechSynthesisUtterance(speakText);
     utterance.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
-    utterance.rate = speedIdx === 1 ? 1.3 : speedIdx === 2 ? 0.8 : 1.0;
+    // set rate equal to selected speed multiplier
+    utterance.rate = (speeds[speedIdx] || 1);
     utterance.pitch = 1.1;
     utterance.volume = 1;
 
@@ -1303,7 +1441,26 @@ function speakCurrentLine() {
       if (enVoice) utterance.voice = enVoice;
     }
 
+    // highlight first word before speaking
+    currentWordIndex = currentWordIndex || 0;
+    highlightWord(currentLineIndex, currentWordIndex);
+
+    // boundary events track words spoken if supported
+    const startingIndex = currentWordIndex;
+    const remaining = wordsForLine.slice(currentWordIndex).join(' ');
+    utterance.onboundary = event => {
+      if (event.name === 'word') {
+        // determine how many words have been spoken by charIndex
+        const prefix = remaining.slice(0, event.charIndex);
+        const spoken = prefix.trim().split(/\s+/).filter(Boolean).length;
+        currentWordIndex = startingIndex + spoken;
+        highlightWord(currentLineIndex, currentWordIndex);
+      }
+    };
+
+    let fallbackTimer = null;
     utterance.onend = () => {
+      if (fallbackTimer) clearInterval(fallbackTimer);
       if (isPlaying) {
         setTimeout(() => {
           if (isPlaying) {
@@ -1314,29 +1471,59 @@ function speakCurrentLine() {
     };
 
     utterance.onerror = () => {
-      // Fallback: auto-advance by timer
+      // Fallback: auto-advance by timer and word highlighting
       if (isPlaying) {
-        const delay = (speeds[speedIdx] || 1) * (line.length < 50 ? 2000 : 3500);
+        const delay = (speeds[speedIdx] || 1) * (wordsForLine.length * 500);
         narrationInterval = setTimeout(() => {
           if (isPlaying) advanceLine();
         }, delay);
+        // start word-by-word advance
+        let idx = currentWordIndex;
+        const interval = 500 / (speeds[speedIdx] || 1); // slower narrator -> longer interval
+        fallbackTimer = setInterval(() => {
+          highlightWord(currentLineIndex, idx);
+          idx++;
+          if (idx >= wordsForLine.length) clearInterval(fallbackTimer);
+        }, interval);
       }
     };
 
     window.speechSynthesis.speak(utterance);
   } else {
-    // No TTS: timer-based
-    const delay = (speedIdx === 1 ? 1500 : speedIdx === 2 ? 4000 : 2500);
+    // No TTS: timer-based, still highlight using approximate speed
+    const wordsForLine = (currentStory._wordLists || [])[currentLineIndex] || [];
+    let idx = currentWordIndex;
+    const interval = 500 / (speeds[speedIdx] || 1);
+    const wordTimer = setInterval(() => {
+      if (!isPlaying) {
+        clearInterval(wordTimer);
+        // also clear highlight if paused
+        document.querySelectorAll('.story-word.speaking').forEach(el=>el.classList.remove('speaking'));
+        return;
+      }
+      highlightWord(currentLineIndex, idx);
+      idx++;
+      if (idx >= wordsForLine.length) clearInterval(wordTimer);
+    }, interval);
+    const delay = (speeds[speedIdx] || 1) * (wordsForLine.length * 500);
     narrationInterval = setTimeout(() => {
-      if (isPlaying) advanceLine();
+      clearInterval(wordTimer);
+      if (isPlaying) {
+        advanceLine();
+      } else {
+        // when narration ended or paused, clear highlight
+        finishStoryHighlight();
+      }
     }, delay);
   }
 }
 
 function advanceLine() {
   if (!currentStory) return;
-  if (currentLineIndex < currentStory.lines.length - 1) {
+  const lines = getActiveLines();
+  if (currentLineIndex < lines.length - 1) {
     currentLineIndex++;
+    currentWordIndex = 0;
     renderStoryLines();
     updateProgress();
     if (isPlaying) speakCurrentLine();
@@ -1350,6 +1537,8 @@ function stopNarration() {
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   if (narrationInterval) clearTimeout(narrationInterval);
   document.getElementById('playBtn').textContent = '▶';
+  // remove any current spoken-word highlight when paused
+  document.querySelectorAll('.story-word.speaking').forEach(el => el.classList.remove('speaking'));
 }
 
 function toggleNarration() {
@@ -1363,12 +1552,14 @@ function toggleNarration() {
 function nextLine() {
   const wasPlaying = isPlaying;
   stopNarration();
-  if (currentStory && currentLineIndex < currentStory.lines.length - 1) {
+  const lines = getActiveLines();
+  if (currentStory && currentLineIndex < lines.length - 1) {
     currentLineIndex++;
+    currentWordIndex = 0;
     renderStoryLines();
     updateProgress();
     if (wasPlaying) startNarration();
-  } else if (currentStory && currentLineIndex === currentStory.lines.length - 1) {
+  } else if (currentStory && currentLineIndex === lines.length - 1) {
     finishStory();
   }
 }
@@ -1378,6 +1569,7 @@ function prevLine() {
   stopNarration();
   if (currentLineIndex > 0) {
     currentLineIndex--;
+    currentWordIndex = 0;
     renderStoryLines();
     updateProgress();
     if (wasPlaying) startNarration();
@@ -1386,7 +1578,7 @@ function prevLine() {
 
 function cycleSpeed() {
   speedIdx = (speedIdx + 1) % 3;
-  const labels = ['1x', '1.5x', '0.7x'];
+  const labels = ['0.5x', '0.75x', '1x'];
   document.getElementById('speedBtn').textContent = labels[speedIdx];
   if (isPlaying) {
     stopNarration();
@@ -1399,6 +1591,7 @@ function finishStory() {
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   document.getElementById('playBtn').textContent = '▶';
   document.getElementById('progressFill').style.width = '100%';
+  // hide reading UI, show end screen
   document.getElementById('storyTextArea').style.display = 'none';
   document.getElementById('storyControls').style.display = 'none';
   document.getElementById('storyEnd').classList.add('show');
@@ -1411,6 +1604,21 @@ function finishStory() {
     end.pitch = 1.2;
     window.speechSynthesis.speak(end);
   }
+}
+
+
+function returnToStory() {
+  // show reading page again, keep currentLineIndex as-is (last line)
+  document.getElementById('storyEnd').classList.remove('show');
+  document.getElementById('storyTextArea').style.display = 'block';
+  document.getElementById('storyControls').style.display = 'flex';
+  currentWordIndex = 0;
+  renderStoryLines();
+  updateProgress();
+}
+
+function finishStoryHighlight() {
+  document.querySelectorAll('.story-word.speaking').forEach(el => el.classList.remove('speaking'));
 }
 
 // Load voices
