@@ -523,9 +523,11 @@ body {
 }
 .story-line.done { opacity: 0.5; }
 
-/* per-word spans for narration/highlighting */
+/* per-word spans for narration/highlighting - DISABLED */
+/*
 .story-word { cursor: pointer; display: inline-block; }
 .story-word.speaking { background: rgba(255,255,0,0.4); }
+*/
 
 
 .story-controls {
@@ -1058,11 +1060,7 @@ function getActiveLines() {
 
 // highlight spoken word span and clear previous
 function highlightWord(lineIdx, wordIdx) {
-  document.querySelectorAll('.story-word.speaking').forEach(el => el.classList.remove('speaking'));
-  const lineEl = document.querySelectorAll('#storyTextArea .story-line')[lineIdx];
-  if (!lineEl) return;
-  const span = lineEl.querySelector(`.story-word[data-word-index="${wordIdx}"]`);
-  if (span) span.classList.add('speaking');
+  // word highlighting disabled
 }
 
 function jumpToWord(lineIdx, wordIdx) {
@@ -1498,7 +1496,7 @@ function speakCurrentLine() {
       if (!isPlaying) {
         clearInterval(wordTimer);
         // also clear highlight if paused
-        document.querySelectorAll('.story-word.speaking').forEach(el=>el.classList.remove('speaking'));
+        finishStoryHighlight();
         return;
       }
       highlightWord(currentLineIndex, idx);
@@ -1538,7 +1536,7 @@ function stopNarration() {
   if (narrationInterval) clearTimeout(narrationInterval);
   document.getElementById('playBtn').textContent = '▶';
   // remove any current spoken-word highlight when paused
-  document.querySelectorAll('.story-word.speaking').forEach(el => el.classList.remove('speaking'));
+  finishStoryHighlight();
 }
 
 function toggleNarration() {
@@ -1618,7 +1616,7 @@ function returnToStory() {
 }
 
 function finishStoryHighlight() {
-  document.querySelectorAll('.story-word.speaking').forEach(el => el.classList.remove('speaking'));
+  // highlighting disabled
 }
 
 // Load voices
